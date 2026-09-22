@@ -40,6 +40,7 @@ from patternrag.strategy.tfidf_retriever import TFIDFRetriever
 from patternrag.decorator.base import RetrieverDecorator
 from patternrag.decorator.caching_decorator import CachingDecorator
 from patternrag.decorator.logging_decorator import LoggingDecorator
+from patternrag.decorator.result_filter_decorator import ResultFilterDecorator
 
 from patternrag.observer.base import EventDispatcher, PipelineObserver
 from patternrag.observer.latency_logger import LatencyLogger
@@ -86,6 +87,8 @@ class PipelineFactory:
     _DECORATOR_TYPES: dict[str, type] = {
         "caching": CachingDecorator,
         "logging": LoggingDecorator,
+        "filter": ResultFilterDecorator,
+        "result_filter": ResultFilterDecorator,
     }
 
     # ------------------------------------------------------------------
@@ -219,7 +222,11 @@ class PipelineFactory:
                 raise ValueError(
                     f"Unknown decorator type: {dec_type!r}. Available: {available}"
                 )
-            wrapped = dec_class(wrapped)
+            if dec_class is ResultFilterDecorator:
+                threshold = dec_cfg.get("score_threshold", 0.0)
+                wrapped = dec_class(wrapped, score_threshold=threshold)
+            else:
+                wrapped = dec_class(wrapped)
         return wrapped
 
     def _register_observers(

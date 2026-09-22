@@ -64,6 +64,7 @@ class MonolithicRAGPipeline:
         generator: LLMGenerator,
         config: dict[str, Any],
         tfidf_index: Any = None,
+        score_threshold: float | None = None,
     ) -> None:
         self._bm25_index = bm25_index
         self._faiss_index = faiss_index
@@ -87,6 +88,11 @@ class MonolithicRAGPipeline:
         self._retrieval_mode: str = config.get("retrieval_mode", "hybrid")
         self._top_k: int = config.get("retrieval", {}).get("top_k", 10)
         self._rrf_k: int = config.get("retrieval", {}).get("rrf_k", 60)
+        self._score_threshold: float | None = (
+            score_threshold
+            if score_threshold is not None
+            else config.get("retrieval", {}).get("score_threshold", None)
+        )
 
     # ------------------------------------------------------------------
     # Public interface
@@ -153,6 +159,9 @@ class MonolithicRAGPipeline:
             # Reciprocal Rank Fusion (standard, no alpha weight)
             # score(d) = Σ  1 / (rrf_k + rank_i(d))
             scored_docs = self._rrf_merge(bm25_results, dense_results, k)
+
+        if self._score_threshold is not None:
+            scored_docs = self._filter_results(scored_docs, self._score_threshold)
 
         retrieval_ms = (time.perf_counter() - retrieval_start) * 1000.0
         self._total_retrieval_ms += retrieval_ms
@@ -246,6 +255,24 @@ class MonolithicRAGPipeline:
             ScoredDoc(doc=doc_map[doc_id], score=rrf_score)
             for doc_id, rrf_score in ranked[:k]
         ]
+
+    @staticmethod
+    def _filter_results(
+        scored_docs: list[ScoredDoc],
+        score_threshold: float,
+    ) -> list[ScoredDoc]:
+        """
+        Filter retrieved documents by relevance score threshold.
+
+        Retains documents satisfying doc.score >= score_threshold.
+        If all documents fall below the threshold, retains the top-1 document.
+        """
+        if not scored_docs:
+            return []
+        filtered = [sd for sd in scored_docs if sd.score >= score_threshold]
+        if not filtered:
+            return [scored_docs[0]]
+        return filtered
 
     # ------------------------------------------------------------------
     # Monitoring summary
