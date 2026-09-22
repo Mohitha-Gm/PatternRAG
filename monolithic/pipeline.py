@@ -82,6 +82,8 @@ class MonolithicRAGPipeline:
         self._cache_hits: int = 0
         self._total_retrieval_ms: float = 0.0
         self._total_generation_ms: float = 0.0
+        self._query_lengths: list[int] = []
+        self._outlier_query_count: int = 0
 
         # Retrieval mode: "bm25" | "dense" | "hybrid"
         # In the research experiments both systems always use "hybrid".
@@ -123,6 +125,11 @@ class MonolithicRAGPipeline:
             k = self._top_k
 
         self._total_queries += 1
+        q_len = len(query)
+        self._query_lengths.append(q_len)
+        if q_len < 15 or q_len > 200:
+            self._outlier_query_count += 1
+
         pipeline_start = time.perf_counter()
 
         # ── Cache check ───────────────────────────────────────────────
@@ -283,7 +290,7 @@ class MonolithicRAGPipeline:
         Return basic monitoring counters accumulated during this session.
 
         Returns:
-            Dict with query count, cache hit rate, and mean latencies.
+            Dict with query count, cache hit rate, mean latencies, and query complexity.
         """
         return {
             "total_queries": self._total_queries,
@@ -303,4 +310,36 @@ class MonolithicRAGPipeline:
                 if self._total_queries > 0
                 else 0.0
             ),
+            "mean_query_length": (
+                sum(self._query_lengths) / len(self._query_lengths)
+                if self._query_lengths
+                else 0.0
+            ),
+            "min_query_length": (
+                min(self._query_lengths)
+                if self._query_lengths
+                else 0
+            ),
+            "max_query_length": (
+                max(self._query_lengths)
+                if self._query_lengths
+                else 0
+            ),
+            "outlier_query_count": self._outlier_query_count,
+        }
+
+    def get_query_complexity_summary(self) -> dict[str, Any]:
+        """Return query complexity statistics matching QueryComplexityMonitor."""
+        if not self._query_lengths:
+            return {
+                "mean_query_length": 0.0,
+                "min_query_length": 0,
+                "max_query_length": 0,
+                "outlier_query_count": 0,
+            }
+        return {
+            "mean_query_length": sum(self._query_lengths) / len(self._query_lengths),
+            "min_query_length": min(self._query_lengths),
+            "max_query_length": max(self._query_lengths),
+            "outlier_query_count": self._outlier_query_count,
         }

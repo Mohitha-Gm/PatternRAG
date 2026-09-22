@@ -46,6 +46,7 @@ from patternrag.observer.base import EventDispatcher, PipelineObserver
 from patternrag.observer.latency_logger import LatencyLogger
 from patternrag.observer.metrics_collector import MetricsCollector
 from patternrag.observer.cost_monitor import CostMonitor
+from patternrag.observer.query_complexity_monitor import QueryComplexityMonitor
 
 
 class PipelineFactory:
@@ -99,6 +100,8 @@ class PipelineFactory:
         "latency_logger": LatencyLogger,
         "metrics_collector": MetricsCollector,
         "cost_monitor": CostMonitor,
+        "query_complexity_monitor": QueryComplexityMonitor,
+        "query_complexity": QueryComplexityMonitor,
     }
 
     # ------------------------------------------------------------------
