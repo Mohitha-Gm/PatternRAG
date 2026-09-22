@@ -35,6 +35,7 @@ from patternrag.strategy.base import RetrieverStrategy
 from patternrag.strategy.bm25_retriever import BM25Retriever
 from patternrag.strategy.dense_retriever import DenseRetriever
 from patternrag.strategy.hybrid_retriever import HybridRetriever
+from patternrag.strategy.tfidf_retriever import TFIDFRetriever
 
 from patternrag.decorator.base import RetrieverDecorator
 from patternrag.decorator.caching_decorator import CachingDecorator
@@ -75,6 +76,7 @@ class PipelineFactory:
         "bm25": BM25Retriever,
         "dense": DenseRetriever,
         "hybrid": HybridRetriever,
+        "tfidf": TFIDFRetriever,
     }
 
     # ------------------------------------------------------------------
@@ -107,6 +109,7 @@ class PipelineFactory:
         bm25_index: BM25Index,
         faiss_index: FAISSIndex,
         embedder: SentenceTransformerEmbedder,
+        tfidf_index: Any = None,
     ) -> "patternrag.pipeline.PatternRAGPipeline":  # type: ignore[name-defined]
         """
         Assemble and return a fully wired PatternRAGPipeline.
@@ -117,12 +120,15 @@ class PipelineFactory:
             bm25_index:  Pre-loaded :class:`~shared.indexing.bm25_index.BM25Index`.
             faiss_index: Pre-loaded :class:`~shared.indexing.faiss_index.FAISSIndex`.
             embedder:    Pre-loaded :class:`~shared.embedding.embedder.SentenceTransformerEmbedder`.
+            tfidf_index: Optional :class:`~shared.indexing.tfidf_index.TFIDFIndex`.
 
         Returns:
             A ready-to-use :class:`~patternrag.pipeline.PatternRAGPipeline`.
         """
         # ── Step 1: Instantiate retriever strategy ─────────────────────
-        retriever = self._build_retriever(pat_cfg, bm25_index, faiss_index, embedder, exp_cfg)
+        retriever = self._build_retriever(
+            pat_cfg, bm25_index, faiss_index, embedder, exp_cfg, tfidf_index=tfidf_index
+        )
 
         # ── Step 2: Apply decorators ───────────────────────────────────
         retriever = self._apply_decorators(pat_cfg, retriever)
@@ -161,6 +167,7 @@ class PipelineFactory:
         faiss_index: FAISSIndex,
         embedder: SentenceTransformerEmbedder,
         exp_cfg: dict[str, Any],
+        tfidf_index: Any = None,
     ) -> RetrieverStrategy:
         retriever_cfg = pat_cfg.get("retriever", {})
         retriever_type = retriever_cfg.get("type", "hybrid").lower()
@@ -177,6 +184,11 @@ class PipelineFactory:
             bm25_r = BM25Retriever(bm25_index)
             dense_r = DenseRetriever(faiss_index, embedder)
             return HybridRetriever(bm25_r, dense_r, rrf_k=rrf_k)
+
+        elif retriever_type == "tfidf":
+            if tfidf_index is None:
+                raise ValueError("tfidf_index must be provided when retriever type is 'tfidf'")
+            return TFIDFRetriever(tfidf_index)
 
         else:
             available = ", ".join(self._RETRIEVER_TYPES.keys())

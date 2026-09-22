@@ -63,12 +63,14 @@ class MonolithicRAGPipeline:
         embedder: SentenceTransformerEmbedder,
         generator: LLMGenerator,
         config: dict[str, Any],
+        tfidf_index: Any = None,
     ) -> None:
         self._bm25_index = bm25_index
         self._faiss_index = faiss_index
         self._embedder = embedder
         self._generator = generator
         self._config = config
+        self._tfidf_index = tfidf_index
 
         # In-memory result cache: maps query string → run result dict.
         # Plain dict — intentionally no abstraction.
@@ -134,6 +136,11 @@ class MonolithicRAGPipeline:
         elif self._retrieval_mode == "dense":
             query_vec = self._embedder.encode(query)
             scored_docs = self._faiss_index.search(query_vec, k)
+
+        elif self._retrieval_mode == "tfidf":
+            if self._tfidf_index is None:
+                raise RuntimeError("TF-IDF index was not provided to MonolithicRAGPipeline.")
+            scored_docs = self._tfidf_index.search(query, k)
 
         else:  # hybrid (default)
             # BM25 branch
