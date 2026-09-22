@@ -1,0 +1,19 @@
+# ============================================================
+# patternrag.yaml — PatternRAG-only pattern wiring.
+# Read exclusively by PipelineFactory at construction time.
+# The monolithic system does NOT use this file.
+# ============================================================
+
+retriever:
+  type: "hybrid"          # Options: bm25 | dense | hybrid
+
+decorators:
+  # Listed innermost-first (first = closest to the concrete retriever).
+  # Factory wraps in reverse order so the last listed is the outermost.
+  - type: "logging"
+  - type: "caching"
+
+observers:
+  - type: "latency_logger"
+  - type: "metrics_collector"
+  - type: "cost_monitor"

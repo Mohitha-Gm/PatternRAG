@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "patternrag"
+version = "0.1.0"
+description = "Comparing Monolithic vs GoF-pattern-based RAG architectures"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["shared*", "monolithic*", "patternrag*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
