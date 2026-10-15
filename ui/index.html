@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PatternRAG · Research Evaluation Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <div class="brand-section">
+        <h1>
+          PatternRAG
+          <span class="brand-badge">Research Dashboard</span>
+        </h1>
+        <div class="subtitle">Monolithic Baseline vs. GoF Pattern-Based RAG Architecture</div>
+      </div>
+
+      <div class="header-meta">
+        <div class="meta-chip">
+          <span class="indicator-dot"></span>
+          <span>Status: <strong>Frozen Artifact</strong></span>
+        </div>
+        <div class="meta-chip">
+          <span>Run ID: <strong>20260921_114121</strong></span>
+        </div>
+        <div class="meta-chip">
+          <span>Dataset: <strong>HotpotQA (30 Queries)</strong></span>
+        </div>
+        <div class="meta-chip">
+          <span>Equivalence: <strong style="color:var(--accent-emerald);">100% Top-10 RRF</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Research Question Hero Banner -->
+    <section class="rq-banner">
+      <div class="rq-content">
+        <div class="rq-icon">💡</div>
+        <div>
+          <div class="rq-title">Primary Research Question</div>
+          <div class="rq-text">
+            "Can applying selected Gang of Four (GoF) design patterns make a RAG pipeline more extensible and maintainable compared with a monolithic implementation, while preserving comparable RAG performance?"
+          </div>
+        </div>
+      </div>
+      <div class="rq-tag">Hypothesis Validated</div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" id="dashboard-nav-tabs">
+      <button class="tab-btn active" data-tab="tab-overview">📊 Overview & Findings</button>
+      <button class="tab-btn" data-tab="tab-retrieval">🎯 Retrieval Benchmark</button>
+      <button class="tab-btn" data-tab="tab-ragas">🧠 RAGAS Answer Quality</button>
+      <button class="tab-btn" data-tab="tab-latency">⚡ Latency & Cost Profile</button>
+      <button class="tab-btn" data-tab="tab-queries">🔍 30-Query Explorer</button>
+      <button class="tab-btn" data-tab="tab-architecture">🏛️ Extensibility (M1–M3)</button>
+      <button class="tab-btn" data-tab="tab-figures">🖼️ Figures & Visualizations</button>
+    </nav>
+
+    <!-- Tab 1: Overview & Executive Summary -->
+    <section class="tab-pane active" id="tab-overview">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Executive Summary & Key Takeaways</h2>
+        <p class="section-desc">Key empirical findings from the 60-execution paired evaluation over HotpotQA.</p>
+      </div>
+
+      <!-- Top Summary Grid -->
+      <div class="summary-grid" id="summary-grid">
+        <!-- Injected dynamically by app.js -->
+      </div>
+
+      <!-- High-Level Findings Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Core Evaluation Findings</h3>
+        </div>
+        <div class="grid-2col">
+          <div>
+            <h4 style="font-size:14px;color:var(--accent-blue);margin-bottom:8px;">1. Strict Functional Equivalence Preserved</h4>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:14px;">
+              PatternRAG replicated the retrieval behaviour of the Monolithic baseline with <strong>100% equivalence</strong> across all 30 evaluated queries. Every query produced identical top-10 document IDs in the exact same rank order under Reciprocal Rank Fusion (RRF, k=60).
+            </p>
+
+            <h4 style="font-size:14px;color:var(--accent-blue);margin-bottom:8px;">2. Comparable Answer Quality</h4>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              RAGAS evaluation using <code>openai/gpt-oss-120b</code> confirmed that decomposing the system into GoF patterns introduces no degradation in output quality: Faithfulness (0.4667 vs 0.4500) and Answer Relevancy (0.2777 vs 0.2517) slightly favoured PatternRAG, while Context Recall was identical (0.6333).
+            </p>
+          </div>
+
+          <div>
+            <h4 style="font-size:14px;color:var(--accent-emerald);margin-bottom:8px;">3. Change Localization Demonstrated (M1–M3)</h4>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:14px;">
+              In three representative modification experiments (M1: TF-IDF Strategy, M2: Result Filter Decorator, M3: Complexity Observer), <strong>zero lines</strong> were altered in the core PatternRAG pipeline. In contrast, the monolithic system required intrusive modifications to its central execution class for every single change.
+            </p>
+
+            <h4 style="font-size:14px;color:var(--accent-emerald);margin-bottom:8px;">4. Production Resilience</h4>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              The evaluation successfully recovered from 46 transient HTTP 429 rate limit events using automated exponential backoff with <strong>0 permanent failures</strong> across all 60 executions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Retrieval Benchmark -->
+    <section class="tab-pane" id="tab-retrieval">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Information Retrieval Benchmark</h2>
+        <p class="section-desc">Comparison of ranking quality, recall, and precision across BM25 lexical + FAISS dense fusion.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Retrieval Metrics Comparison (Aggregate)</h3>
+          <span style="font-size:12px;color:var(--text-dim);font-family:monospace;">HotpotQA Validation Split · 30 Paired Queries</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th>IR Metric</th>
+                <th>Monolithic Baseline</th>
+                <th>PatternRAG Strategy</th>
+                <th>Delta (%)</th>
+                <th>Visual Distribution</th>
+              </tr>
+            </thead>
+            <tbody id="retrieval-table-body">
+              <!-- Injected by app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:24px;">
+          <h4 style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px;">Metric Distribution Chart</h4>
+          <div class="chart-container" id="retrieval-chart-container">
+            <!-- SVG Chart dynamically rendered by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: RAGAS Quality -->
+    <section class="tab-pane" id="tab-ragas">
+      <div class="section-title-wrap">
+        <h2 class="section-title">RAGAS Answer-Quality Evaluation</h2>
+        <p class="section-desc">Automated LLM-as-a-Judge evaluation using <code>openai/gpt-oss-120b</code>.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h3>RAGAS Quality Dimensions</h3>
+          <span style="font-size:12px;color:var(--text-dim);font-family:monospace;">MiniLM Embeddings · 30 Queries</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th>Quality Metric</th>
+                <th>Monolithic</th>
+                <th>PatternRAG</th>
+                <th>Difference</th>
+                <th>Empirical Interpretation</th>
+              </tr>
+            </thead>
+            <tbody id="ragas-table-body">
+              <!-- Injected by app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:24px;">
+          <h4 style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px;">RAGAS Metric Comparison</h4>
+          <div class="chart-container" id="ragas-chart-container" style="height:250px;">
+            <!-- SVG Chart dynamically rendered by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Latency & Cost Profile -->
+    <section class="tab-pane" id="tab-latency">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Pipeline Latency & Cost Profile</h2>
+        <p class="section-desc">Runtime execution duration by stage and decoupled observer telemetry.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h3>Stage-by-Stage Latency (ms)</h3>
+          <span style="font-size:12px;color:var(--text-dim);font-family:monospace;">Mean, Median, and 95th Percentile</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="metrics-table">
+            <thead>
+              <tr>
+                <th>Pipeline Stage</th>
+                <th>Statistic</th>
+                <th>Monolithic</th>
+                <th>PatternRAG</th>
+                <th>Variance (Δ)</th>
+              </tr>
+            </thead>
+            <tbody id="latency-table-body">
+              <!-- Injected by app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:16px;padding:12px 16px;background:rgba(255,255,255,0.02);border-radius:var(--radius-sm);border:1px solid var(--border-subtle);font-size:12px;color:var(--text-muted);">
+          ℹ️ <strong>Note on Latency:</strong> External LLM generation accounted for over 80% of total pipeline latency. During testing, 46 transient HTTP 429 rate limits occurred; the built-in exponential backoff retry handler resolved all of them without query dropouts.
+        </div>
+      </div>
+
+      <!-- Decoupled Observer Telemetry -->
+      <div class="section-title-wrap" style="margin-top:36px;">
+        <h3 class="section-title" style="font-size:18px;">Decoupled Telemetry (Observer Pattern)</h3>
+        <p class="section-desc">Metrics collected transparently via side-channel observers without polluting pipeline code.</p>
+      </div>
+
+      <div id="observer-telemetry-container">
+        <!-- Injected by app.js -->
+      </div>
+    </section>
+
+    <!-- Tab 5: 30-Query Deep Dive Explorer -->
+    <section class="tab-pane" id="tab-queries">
+      <div class="section-title-wrap">
+        <h2 class="section-title">30-Query Deep Dive Explorer</h2>
+        <p class="section-desc">Inspect all 30 evaluated HotpotQA queries with side-by-side answers, retrieved docs, and RAGAS scores.</p>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="search-filter-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="query-search-input" class="search-input" placeholder="Search by question, answer text, or query ID...">
+        </div>
+
+        <select id="query-filter-select" class="filter-select">
+          <option value="all">All 30 Queries</option>
+          <option value="agreement">Identical Answers (Agreement)</option>
+          <option value="disagreement">Variations Found</option>
+          <option value="high-faithfulness">High Faithfulness (≥ 0.8)</option>
+        </select>
+      </div>
+
+      <!-- Query List Container -->
+      <div class="query-list-container" id="query-list-container">
+        <!-- Injected dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Tab 6: Architectural Extensibility (M1-M3) -->
+    <section class="tab-pane" id="tab-architecture">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Architectural Extensibility & Design Patterns</h2>
+        <p class="section-desc">How applying Strategy, Decorator, Observer, and Factory isolates change and prevents code rot.</p>
+      </div>
+
+      <!-- 4 GoF Patterns Overview -->
+      <div class="pattern-card-grid">
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <span class="pattern-name">Strategy Pattern</span>
+            <span class="pattern-role">Retrieval</span>
+          </div>
+          <p class="pattern-desc">Decouples search algorithms behind the <code>RetrieverStrategy</code> contract (<code>retrieve(query, k)</code>).</p>
+          <div class="pattern-components">
+            BM25Retriever, DenseRetriever, HybridRetriever, TFIDFRetriever
+          </div>
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <span class="pattern-name">Decorator Pattern</span>
+            <span class="pattern-role">Cross-Cutting</span>
+          </div>
+          <p class="pattern-desc">Transparently stacks non-functional concerns around retrievers without modifying retriever algorithms.</p>
+          <div class="pattern-components">
+            CachingDecorator, LoggingDecorator, ResultFilterDecorator
+          </div>
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <span class="pattern-name">Observer Pattern</span>
+            <span class="pattern-role">Telemetry</span>
+          </div>
+          <p class="pattern-desc">Decoupled side-channel monitoring via <code>EventDispatcher</code> without slowing or touching the pipeline.</p>
+          <div class="pattern-components">
+            LatencyLogger, MetricsCollector, CostMonitor, QueryComplexityMonitor
+          </div>
+        </div>
+
+        <div class="pattern-card">
+          <div class="pattern-header">
+            <span class="pattern-name">Factory Pattern</span>
+            <span class="pattern-role">Construction</span>
+          </div>
+          <p class="pattern-desc">Centralizes configuration-driven pipeline assembly from YAML at startup time.</p>
+          <div class="pattern-components">
+            PipelineFactory (wires Strategy + Decorators + Observers)
+          </div>
+        </div>
+      </div>
+
+      <!-- Modification Experiments M1-M3 -->
+      <div class="section-title-wrap" style="margin-top:36px;">
+        <h3 class="section-title" style="font-size:18px;">Empirical Modification Experiments (M1–M3)</h3>
+        <p class="section-desc">Controlled modifications performed independently on both systems to evaluate change localization.</p>
+      </div>
+
+      <div id="architectural-container">
+        <!-- Injected dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Tab 7: Figures & Visualizations -->
+    <section class="tab-pane" id="tab-figures">
+      <div class="section-title-wrap">
+        <h2 class="section-title">Research Figures & Visualizations</h2>
+        <p class="section-desc">Frozen publication-ready charts generated directly from benchmark evaluation data.</p>
+      </div>
+
+      <div class="figures-grid">
+        <div class="figure-card">
+          <div class="figure-img-wrap">
+            <img src="../figures/retrieval_metrics.png" alt="Retrieval Metrics Comparison Chart" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><text x=\'50%27 y=\'50%27 fill=\'%2364748b\' font-size=\'14\' text-anchor=\'middle\'>figures/retrieval_metrics.png</text></svg>';">
+          </div>
+          <div class="figure-caption">Figure 1: Comparative Retrieval Metrics</div>
+          <div class="figure-sub">MRR, NDCG@10, Precision@k, and Recall@k comparison between Monolithic and PatternRAG. (Click to expand)</div>
+        </div>
+
+        <div class="figure-card">
+          <div class="figure-img-wrap">
+            <img src="../figures/latency_comparison.png" alt="Latency Comparison Chart" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><text x=\'50%27 y=\'50%27 fill=\'%2364748b\' font-size=\'14\' text-anchor=\'middle\'>figures/latency_comparison.png</text></svg>';">
+          </div>
+          <div class="figure-caption">Figure 2: Execution Latency Breakdown</div>
+          <div class="figure-sub">Stage-by-stage runtime comparison highlighting generation dominance and retrieval timings. (Click to expand)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <div>PatternRAG · A Research Study on GoF Design Patterns in RAG Pipelines</div>
+      <div>Evaluation Subset: HotpotQA Validation (30 Queries) · Run ID: <code>20260921_114121</code></div>
+    </footer>
+
+  </div>
+
+  <!-- Modal / Lightbox for Figure Inspection -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+      <h3 id="modal-title" style="font-size:16px;margin-bottom:16px;color:#f8fafc;">Figure View</h3>
+      <div style="display:flex;justify-content:center;align-items:center;background:#090d16;padding:16px;border-radius:var(--radius-sm);">
+        <img id="modal-img" src="" alt="Enlarged Figure" style="max-width:100%;max-height:75vh;object-fit:contain;border-radius:4px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts: Zero external runtime dependencies -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

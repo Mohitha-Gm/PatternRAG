@@ -28,6 +28,7 @@ PatternRAG/
 ├── experiments/     ← Experiment runners and evaluation harnesses
 ├── results/         ← Saved experiment outputs and frozen benchmark artifacts
 ├── analysis/        ← Comparison tables and visualization scripts
+├── ui/              ← Interactive web evaluation dashboard for benchmark results & query explorer
 └── tests/           ← Full test suite (97 tests)
 ```
 
@@ -245,6 +246,29 @@ results/
 python analysis/compare_results.py --run-id 20260921_114121
 python analysis/plots.py --run-id 20260921_114121 --output-dir figures/
 ```
+
+---
+
+## Evaluation Dashboard (UI)
+
+An interactive, self-contained web dashboard is available in [`ui/`](ui/) to explore and visualize all evaluation results, retrieval metrics, RAGAS scores, latency profiles, and individual query answers.
+
+### Quick Start
+- **Option 1 — Direct in Browser (Zero Setup):** Open [`ui/index.html`](ui/index.html) directly in your browser.
+- **Option 2 — Local HTTP Server:**
+  ```bash
+  python -m http.server 8000 --directory ui
+  ```
+  Then visit `http://localhost:8000`.
+
+### Key Features
+- **Executive Summary:** Overview of the 100% Hybrid Retrieval Equivalence and key research takeaways.
+- **Retrieval Benchmark:** Side-by-side metric tables (MRR, NDCG@10, Precision/Recall @1, 5, 10) with custom SVG charts.
+- **RAGAS Answer-Quality Evaluation:** Breakdown across Faithfulness, Answer Relevancy, Context Precision, and Context Recall.
+- **Latency & Cost Telemetry:** Stage-by-stage runtime distributions (Mean, Median, P95) and decoupled observer metrics.
+- **30-Query Deep Dive Explorer:** Search, filter, and inspect all 30 paired queries with side-by-side answer comparisons and top-10 retrieved document rankings.
+- **Architectural Extensibility (M1–M3):** Interactive breakdown of the 4 GoF patterns and change localization in M1–M3 experiments.
+- **Figure Lightbox:** Embedded high-resolution plots (`figures/retrieval_metrics.png`, `figures/latency_comparison.png`).
 
 ---
 
