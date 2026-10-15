@@ -1,0 +1,11 @@
+{
+  "experiment": "PatternRAG Final RAGAS Evaluation",
+  "frozen_functional_run": "20260921_114121",
+  "timestamp": "2026-09-21T22:28:36.947427",
+  "n_queries": 30,
+  "monolithic_completed": 30,
+  "monolithic_failed": 0,
+  "patternrag_completed": 30,
+  "patternrag_failed": 0,
+  "total_rate_limit_events": 0
+}

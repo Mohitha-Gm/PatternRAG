@@ -1,0 +1,7 @@
+{
+  "total_queries": 30,
+  "cache_hits": 0,
+  "cache_hit_rate": 0.0,
+  "mean_retrieval_ms": 966.1937999849519,
+  "mean_generation_ms": 6497.747726660843
+}

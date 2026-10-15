@@ -1,6 +1,4 @@
 artifacts/
-results/
-figures/
 __pycache__/
 *.pyc
 *.pyo
@@ -9,3 +7,5 @@ __pycache__/
 *.bin
 *.meta
 .DS_Store
+.pytest_cache/
+scratch/

@@ -1,0 +1,28 @@
+{
+  "run_id": "20260921_114121",
+  "timestamp": "2026-09-21T22:28:36.917089",
+  "judge_model": "openai/gpt-oss-120b",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "metrics": {
+    "faithfulness": {
+      "monolithic": 0.45,
+      "patternrag": 0.4666666666666667,
+      "difference": -0.016666666666666663
+    },
+    "answer_relevancy": {
+      "monolithic": 0.2516504607776754,
+      "patternrag": 0.2776888375061372,
+      "difference": -0.02603837672846182
+    },
+    "context_precision": {
+      "monolithic": 0.4220105819788137,
+      "patternrag": 0.3939682539391003,
+      "difference": 0.028042328039713404
+    },
+    "context_recall": {
+      "monolithic": 0.6333333333333333,
+      "patternrag": 0.6333333333333333,
+      "difference": 0.0
+    }
+  }
+}

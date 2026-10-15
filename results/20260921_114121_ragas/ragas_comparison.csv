@@ -1,0 +1,5 @@
+metric,monolithic,patternrag,difference
+faithfulness,0.4500,0.4667,-0.0167
+answer_relevancy,0.2517,0.2777,-0.0260
+context_precision,0.4220,0.3940,0.0280
+context_recall,0.6333,0.6333,0.0000

@@ -1,0 +1,16 @@
+embedding_local_files_only: true
+embedding_model: sentence-transformers/all-MiniLM-L6-v2
+evaluation_type: ragas
+frozen_run_id: '20260921_114121'
+inter_query_delay: 2.0
+judge_model: openai/gpt-oss-120b
+judge_provider: groq
+judge_temperature: 0.0
+max_retries: 5
+metrics_evaluated:
+- faithfulness
+- answer_relevancy
+- context_precision
+- context_recall
+monolithic_input: C:\Users\mohit\OneDrive\Desktop\INCOMPLETE PROJ\PatternRAG\results\20260921_114121_monolithic\answers.jsonl
+patternrag_input: C:\Users\mohit\OneDrive\Desktop\INCOMPLETE PROJ\PatternRAG\results\20260921_114121_patternrag\answers.jsonl

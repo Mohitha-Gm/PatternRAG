@@ -1,0 +1,32 @@
+experiment:
+  embedding:
+    local_files_only: true
+    model_name: sentence-transformers/all-MiniLM-L6-v2
+  experiment:
+    dataset_split: validation
+    num_queries: 30
+    seed: 42
+  llm:
+    initial_backoff: 2.0
+    inter_query_delay: 2.0
+    max_retries: 5
+    max_tokens: 256
+    model_name: openai/gpt-oss-120b
+    provider: groq
+    temperature: 0.0
+  paths:
+    artifacts_dir: ./artifacts
+    results_dir: ./results
+  retrieval:
+    rrf_k: 60
+    top_k: 10
+patternrag:
+  decorators:
+  - type: logging
+  - type: caching
+  observers:
+  - type: latency_logger
+  - type: metrics_collector
+  - type: cost_monitor
+  retriever:
+    type: hybrid

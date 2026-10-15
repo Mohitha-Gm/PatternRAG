@@ -1,0 +1,35 @@
+[
+  {
+    "observer": "LatencyLogger",
+    "summary": {
+      "retrieval_latency_ms": {
+        "mean": 1443.1057300030564,
+        "median": 1333.1510500283912,
+        "p95": 1791.4459998719394
+      },
+      "generation_latency_ms": {
+        "mean": 6657.958453342629,
+        "median": 7121.754149906337,
+        "p95": 10566.553600132465
+      },
+      "n_queries": 30
+    }
+  },
+  {
+    "observer": "MetricsCollector",
+    "summary": {
+      "total_queries_tracked": 30,
+      "mean_docs_retrieved": 10.0
+    }
+  },
+  {
+    "observer": "CostMonitor",
+    "summary": {
+      "total_prompt_tokens": 40017,
+      "total_completion_tokens": 4875,
+      "total_tokens": 44892,
+      "n_generations": 30,
+      "estimated_cost_usd": 0.027461
+    }
+  }
+]

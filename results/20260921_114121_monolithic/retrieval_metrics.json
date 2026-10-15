@@ -1,0 +1,314 @@
+{
+  "aggregate": {
+    "Recall@1": 0.38333333333333336,
+    "Precision@1": 0.7666666666666667,
+    "Recall@5": 0.6,
+    "Precision@5": 0.24000000000000002,
+    "Recall@10": 0.7166666666666667,
+    "Precision@10": 0.14333333333333334,
+    "MRR": 0.84,
+    "NDCG@10": 0.8125610521211117
+  },
+  "per_query": [
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 0.0,
+      "Precision@5": 0.0,
+      "Recall@10": 0.0,
+      "Precision@10": 0.0,
+      "MRR": 0.0,
+      "NDCG@10": 0.0
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 0.5,
+      "NDCG@10": 0.6309297535714575
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.9197207891481876
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8772153153380493
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.9197207891481876
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8315546295836225
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 0.5,
+      "NDCG@10": 0.6934264036172708
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.9197207891481876
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 0.5,
+      "NDCG@10": 0.6309297535714575
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8175295903539445
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 0.5,
+      "NDCG@10": 0.6309297535714575
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8065735963827293
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8065735963827293
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.9197207891481876
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8315546295836225
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.9197207891481876
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 1.0,
+      "Precision@5": 0.4,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 0.0,
+      "Precision@5": 0.0,
+      "Recall@10": 0.0,
+      "Precision@10": 0.0,
+      "MRR": 0.0,
+      "NDCG@10": 0.0
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 1.0,
+      "NDCG@10": 0.8065735963827293
+    },
+    {
+      "Recall@1": 0.0,
+      "Precision@1": 0.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 1.0,
+      "Precision@10": 0.2,
+      "MRR": 0.2,
+      "NDCG@10": 0.41443699955334395
+    },
+    {
+      "Recall@1": 0.5,
+      "Precision@1": 1.0,
+      "Recall@5": 0.5,
+      "Precision@5": 0.2,
+      "Recall@10": 0.5,
+      "Precision@10": 0.1,
+      "MRR": 1.0,
+      "NDCG@10": 1.0
+    }
+  ]
+}
